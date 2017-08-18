@@ -1,0 +1,13 @@
+parser: babel-eslint
+extends: eslint-config-airbnb
+env:
+  node: true
+  mocha: true
+globals:
+  browser: true
+rules:
+  react/prefer-stateless-function: 0
+  react/jsx-filename-extension: 0
+  no-use-before-define: 0
+  jsx-a11y/href-no-hash: 0
+  react/require-default-props: 0

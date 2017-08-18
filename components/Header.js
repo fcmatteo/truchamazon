@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Image, Text } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 
 export default () => (
   <View style={styles.header}>
@@ -24,10 +24,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
     color: '#FFF',
+    fontFamily: 'Arvo',
   },
   green: {
-    color: '#90f190'
+    color: '#90f190',
   },
 });

@@ -6,18 +6,13 @@ import {
   Image,
 } from 'react-native';
 
-export default Book = (props) => (
+const Book = props => (
   <View style={styles.container}>
-    <Image style={styles.img} source={{uri: props.image}} />
+    <Image style={styles.img} source={{ uri: props.image }} />
     <View style={styles.info}>
-      <Text style={styles.title} numberOfLines={2}>Harry Potter y el caliz de fuego</Text>
-      <Text style={styles.description} numberOfLines={4}>
-        Este es el cuarto libro de la saga Harry Potter. En esta ocasión Harry 
-        Este es el cuarto libro de la saga Harry Potter. En esta ocasión Harry 
-        Este es el cuarto libro de la saga Harry Potter. En esta ocasión Harry 
-        Este es el cuarto libro de la saga Harry Potter. En esta ocasión Harry 
-        Este es el cuarto libro de la saga Harry Potter. En esta ocasión Harry 
-        Este es el cuarto libro de la saga Harry Potter. En esta ocasión Harry 
+      <Text style={styles.title} numberOfLines={2}>{props.title}</Text>
+      <Text style={styles.description} numberOfLines={3}>
+        {props.desc}
       </Text>
     </View>
   </View>
@@ -49,4 +44,6 @@ Book.propTypes = {
   image: PropTypes.string.isRequired,
   title: PropTypes.string,
   desc: PropTypes.string,
-}
+};
+
+export default Book;
