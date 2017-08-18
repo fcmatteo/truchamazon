@@ -1,10 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, Image, Text } from 'react-native';
-import logo from '../assets/logo.jpg';
 
 export default () => (
   <View style={styles.header}>
-    <Image style={styles.logo} source={logo} />
     <Text style={styles.title}>
       Truch
       <Text style={styles.green}>Amazon</Text>
@@ -16,18 +14,20 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     paddingTop: 25,
-    paddingLeft: 25,
+    paddingBottom: 5,
+    paddingLeft: 20,
     alignItems: 'center',
+    backgroundColor: '#575757',
+    marginBottom: 20,
+    borderBottomWidth: 2,
+    borderBottomColor: '#305f30',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    color: '#FFF',
   },
   green: {
-    color: 'green',
+    color: '#90f190'
   },
-  logo: {
-    width: 125,
-    height: 125,
-  }
 });
