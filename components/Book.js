@@ -8,7 +8,13 @@ import {
 
 const Book = props => (
   <View style={styles.container}>
-    <Image style={styles.img} source={{ uri: props.image }} />
+    {
+      props.image &&
+      <Image
+        style={styles.img}
+        source={{ uri: props.image.replace('http://', 'https://') }}
+      />
+    }
     <View style={styles.info}>
       <Text style={styles.title} numberOfLines={2}>{props.title}</Text>
       <Text style={styles.description} numberOfLines={3}>
@@ -25,6 +31,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignContent: 'flex-start',
     maxHeight: 100,
+    marginVertical: 2,
   },
   img: {
     width: 70,
@@ -41,7 +48,7 @@ const styles = StyleSheet.create({
 });
 
 Book.propTypes = {
-  image: PropTypes.string.isRequired,
+  image: PropTypes.string,
   title: PropTypes.string,
   desc: PropTypes.string,
 };
