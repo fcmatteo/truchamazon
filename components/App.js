@@ -9,8 +9,17 @@ import {
   TextInput,
   Switch,
 } from 'react-native';
-import Header from './Header';
+import { Stack, Scene, Router, Tabs } from 'react-native-router-flux';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 import Book from './Book';
+import BookView from './BookView';
+import Favs from './Favs';
+import reducer from '../reducers';
+
+// El store se crea pasándole un único reducer
+// a `createStore`, y se pasa como prop a `Provider`
+const store = createStore(reducer);
 
 export default class Books extends Component {
   state = {
@@ -47,6 +56,7 @@ export default class Books extends Component {
       title={book.item.volumeInfo.title}
       desc={book.item.volumeInfo.description}
       image={book.item.volumeInfo.imageLinks && book.item.volumeInfo.imageLinks.smallThumbnail}
+      id={book.item.id}
     />
   );
   renderFooter = () => <Text>No hay más libros</Text>
@@ -61,8 +71,7 @@ export default class Books extends Component {
       );
     return (
       <View style={styles.container}>
-        <StatusBar translucent />
-        <Header />
+        <StatusBar />
         <TextInput
           style={styles.searchBox}
           placeholder={'Ingrese el libro a buscar'}
@@ -101,6 +110,28 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginRight: 20,
   },
+  tabStyle: {
+    fontSize: 20,
+    marginBottom: 15,
+  },
+  realTabStyle: {
+    backgroundColor: 'blue',
+  },
 });
 
-AppRegistry.registerComponent('Books', () => Books);
+// Provider tiene que contener toda la aplicación adentro
+const App = () => (
+  <Provider store={store}>
+    <Router>
+      <Stack key="root">
+        <Tabs key="tabbar" labelStyle={styles.tabStyle} hideNavBar tabBarPosition={'bottom'} >
+          <Scene tabBarLabel={'Buscar'} key="search" component={Books} title={'Buscar'} />
+          <Scene key="favs" component={Favs} title={'Favoritos'} />
+        </Tabs>
+        <Scene key="book" component={BookView} />
+      </Stack>
+    </Router>
+  </Provider>
+);
+
+AppRegistry.registerComponent('Books', () => App);

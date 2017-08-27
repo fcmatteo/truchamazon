@@ -4,31 +4,37 @@ import {
   Text,
   View,
   Image,
+  TouchableOpacity,
 } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 export default class BookView extends Component {
   static propTypes = {
     image: PropTypes.string,
     title: PropTypes.string,
     desc: PropTypes.string,
+    id: PropTypes.string,
   }
+  goToBook = () => Actions.book(this.props)
   render() {
     return (
-      <View style={styles.container}>
-        {
-          this.props.image &&
-          <Image
-            style={styles.img}
-            source={{ uri: this.props.image.replace('http://', 'https://') }}
-          />
-        }
-        <View style={styles.info}>
-          <Text style={styles.title} numberOfLines={2}>{this.props.title}</Text>
-          <Text style={styles.description} numberOfLines={3}>
-            {this.props.desc}
-          </Text>
+      <TouchableOpacity onPress={this.goToBook}>
+        <View style={styles.container}>
+          {
+            this.props.image &&
+            <Image
+              style={styles.img}
+              source={{ uri: this.props.image.replace('http://', 'https://') }}
+            />
+          }
+          <View style={styles.info}>
+            <Text style={styles.title} numberOfLines={2}>{this.props.title}</Text>
+            <Text style={styles.description} numberOfLines={3}>
+              {this.props.desc}
+            </Text>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }
