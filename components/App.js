@@ -16,6 +16,7 @@ import Book from './Book';
 import BookView from './BookView';
 import Favs from './Favs';
 import reducer from '../reducers';
+import firebase from '../config/firebase';
 
 // El store se crea pasándole un único reducer
 // a `createStore`, y se pasa como prop a `Provider`
@@ -29,7 +30,23 @@ export default class Books extends Component {
     spanish: false,
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    try {
+      // await firebase.auth().createUserWithEmailAndPassword('mail@gmail.com', 'password');
+      const user = await firebase.auth().signInWithEmailAndPassword('mail@gmail.com', 'password');
+      console.warn('user', user);
+
+      // Puedo acceder desde cualquier lugar al usuario logueado con esta linea:
+      // firebase.auth().currentUser;
+
+      // Puedo actualizar los datos del usuario:
+      // await user.updateProfile({ displayName: "Nombre" })
+
+      // Enviar mail de verificación:
+      // await user.sendEmailVerification()
+    } catch (e) {
+      console.warn('error', e);
+    }
     this.search();
   }
 

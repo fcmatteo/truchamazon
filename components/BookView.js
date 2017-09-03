@@ -5,11 +5,13 @@ import {
   View,
   Image,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addToFav } from '../actions';
+import firebase from '../config/firebase';
 
 class BookView extends Component {
   static propTypes = {
@@ -20,11 +22,30 @@ class BookView extends Component {
     addToFav: PropTypes.func,
     isAddedToFav: PropTypes.bool,
   }
+  state = {
+    comments: [],
+  }
+  componentDidMount() {
+    this.db = firebase.database().ref(`comments/${this.props.id}`)
+      .on('value', (data) => {
+        if (!data) {
+          return;
+        }
+        const comments = JSON.parse(JSON.stringify(data));
+        this.setState({ comments });
+      });
+  }
+  componentWillUnmount() {
+    this.db.off('value');
+  }
   goBack = () => {
     Actions.pop();
   }
   addToFav = () => {
     this.props.addToFav(this.props.id);
+  }
+  comment = (e) => {
+    firebase.database().ref(`comments/${this.props.id}`).set([...this.state.comments, e.nativeEvent.text]);
   }
   render() {
     return (
@@ -53,6 +74,14 @@ class BookView extends Component {
         <TouchableOpacity style={styles.button} onPress={this.goBack}>
           <Text>Ir atrás</Text>
         </TouchableOpacity>
+        <TextInput
+          onSubmitEditing={this.comment}
+        />
+        <View>
+          {this.state.comments.map((comentario) =>
+            <Text key={comentario}>{comentario}</Text>
+          )}
+        </View>
       </View>
     );
   }
